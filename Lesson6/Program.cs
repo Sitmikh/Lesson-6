@@ -37,6 +37,8 @@ namespace Lesson6
 
                     Console.Write("Введите место рождения(город): ");
                     note += $"город {Console.ReadLine()}\t";
+                    
+                    sw.WriteLine(note);
             }
         }
 
@@ -57,24 +59,26 @@ namespace Lesson6
                 {
                     Console.WriteLine("Файл не создан/пустой. Нажмите 2 для создания файла и внесения в нее первой записи");
                 }
+                //Console.ReadKey();
             }
         }
 
         static void Main(string[] args)
         {
-            char key = '0';
+            string key;
             
             while (true)
             {
-                Console.WriteLine("\tНажмите 1, чтобы отобразить список. Нажмите 2, чтобы внести новые данные");
-                Console.ReadKey();
+                Console.WriteLine("\tНажмите 1, чтобы отобразить список. Нажмите 2, чтобы внести новые данные. Нажмите 0 для выхода.");
+                key = Console.ReadLine();
                 switch (key)
                 {
-                    case '1':
+                    case "1":
                         Reader(); break;
-                    case '2':
+                    case "2":
                         Writer(); break;
-                        
+                    case "0":
+                        break;
                 }
             }
            // char.ToLower(add) == '1'
