@@ -4,67 +4,75 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Lesson6
 {
     internal class Program
     {
-
-        static void Writer()
+        /// <summary>
+        /// Метод для создания/заполнения файла
+        /// </summary>
+        /// <param name="id">первое число</param>
+        /// <returns></returns>
+        static uint Writer(uint id)
         {
             using (StreamWriter sw = new StreamWriter("Cотрудники.txt", true, Encoding.Unicode))
             {
-                    string note = String.Empty;
-
-                    uint id = 1;
-                    note += $"{id}#";
-                    id++;
+                    string line = String.Empty;
+                    
+                    line += $"{id}#";
 
                     string dateTime = DateTime.Now.ToString();
-                    note += $"{dateTime}#";
+                    line += $"{dateTime}#";
 
                     Console.Write("Введите ФИО: ");
-                    note += $"{Console.ReadLine()}#";
+                    line += $"{Console.ReadLine()}#";
 
                     Console.Write("Введите возраст: ");
-                    note += $"{Console.ReadLine()}#";
+                    line += $"{Console.ReadLine()}#";
 
                     Console.Write("Введите рост: ");
-                    note += $"{Console.ReadLine()}#";
+                    line += $"{Console.ReadLine()}#";
 
                     Console.Write("Введите дату рождение в формате ДД.ММ.ГГГГ: ");
-                    note += $"{Console.ReadLine()}#";
+                    line += $"{Console.ReadLine()}#";
 
                     Console.Write("Введите место рождения(город): ");
-                    note += $"город {Console.ReadLine()}\t";
+                    line += $"город {Console.ReadLine()}";
                     
-                    sw.WriteLine(note);
+                    sw.WriteLine(line);
+                   
+                    return id;
             }
         }
-
+        /// <summary>
+        /// Метод для считывания из файла
+        /// </summary>
         static void Reader()
         {
             using (StreamReader sr = new StreamReader("Cотрудники.txt", Encoding.Unicode))
             {
-                string line;
-                if ((line = sr.ReadLine()) != null)
+                string line = sr.ReadToEnd();
+                string[] data = line.Split('#','\r','\n');
+                if (line != null)
                 {
-                    while ((line != null))
+                    foreach (var word in line)
                     {
-                        string[] data = line.Split('#');
-                        Console.WriteLine($"{data[0],15}.{data[1],15}{data[2],15}{data[3],15}лет{data[4],15}см.{data[5],15}г.р.{data[6],15}");
-                    }
+                        Console.Write(word);
+                    }    
                 }
                 else
                 {
                     Console.WriteLine("Файл не создан/пустой. Нажмите 2 для создания файла и внесения в нее первой записи");
                 }
-                //Console.ReadKey();
+                
             }
         }
 
         static void Main(string[] args)
         {
+            uint id = 1;
             string key;
             
             while (true)
@@ -76,12 +84,13 @@ namespace Lesson6
                     case "1":
                         Reader(); break;
                     case "2":
-                        Writer(); break;
+                        
+                        Writer(id); id++; break;
                     case "0":
+                        System.Environment.Exit(0);
                         break;
                 }
             }
-           // char.ToLower(add) == '1'
         }
     }
 }
